@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.4.0'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id "jacoco"
+	id 'com.avast.gradle.docker-compose' version '0.13.3'
 }
 
 group = 'io.builders'
@@ -18,10 +20,18 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	springFox = "2.9.2"
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation "io.springfox:springfox-swagger2:${springFox}"
+	implementation "io.springfox:springfox-swagger-ui:${springFox}"
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -29,4 +39,15 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled = true
+	}
+}
+
+plugins.withType(JacocoPlugin) {
+	tasks["test"].finalizedBy "jacocoTestReport"
 }
