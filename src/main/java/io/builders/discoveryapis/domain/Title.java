@@ -1,5 +1,7 @@
 package io.builders.discoveryapis.domain;
 
+import io.builders.discoveryapis.dto.CreateTitleDTO;
+import io.builders.discoveryapis.dto.TitleDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +31,18 @@ public class Title {
     private String duration;
     private String listedIn;
     private String description;
+
+    public static Title from(CreateTitleDTO createTitleDTO) {
+        return Title.builder()
+                .director(createTitleDTO.getDirector())
+                .cast(createTitleDTO.getCast())
+                .country(createTitleDTO.getCountry())
+                .dateAdded(createTitleDTO.getDateAdded())
+                .releaseYear(createTitleDTO.getReleaseYear())
+                .rating(createTitleDTO.getRating())
+                .duration(createTitleDTO.getDuration())
+                .listedIn(createTitleDTO.getListedIn())
+                .description(createTitleDTO.getDescription())
+                .build();
+    }
 }
