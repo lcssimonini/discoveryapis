@@ -20,7 +20,7 @@ public class CreateTitleDTO {
     private String country;
     private String dateAdded;
     private String releaseYear;
-    @NotBlank
+    @NotBlank(message = "should have rating")
     private String rating;
     private String duration;
     private String listedIn;
