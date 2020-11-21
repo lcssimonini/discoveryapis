@@ -36,7 +36,7 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDTO createMovie(CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to save client: {}", createTitleDTO);
+        log.debug("Attempt to save movie: {}", createTitleDTO);
         Title movie = Title.from(createTitleDTO);
         movie.setType(MOVIE);
         return TitleDTO.from(repository.save(movie));
@@ -44,18 +44,29 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDTO createSeries(CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to save client: {}", createTitleDTO);
+        log.debug("Attempt to save series: {}", createTitleDTO);
         Title series = Title.from(createTitleDTO);
         series.setType(SERIES);
         return TitleDTO.from(repository.save(series));
     }
 
     @Override
-    public TitleDTO updateTitle(String id, CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to update client with id: {}, and data: {}", id, createTitleDTO);
+    public TitleDTO updateSeries(String id, CreateTitleDTO createTitleDTO) {
+        log.debug("Attempt to update series with id: {}, and data: {}", id, createTitleDTO);
+        return updateTitle(id, createTitleDTO, SERIES);
+    }
+
+    @Override
+    public TitleDTO updateMovie(String id, CreateTitleDTO createTitleDTO) {
+        log.debug("Attempt to update movie with id: {}, and data: {}", id, createTitleDTO);
+        return updateTitle(id, createTitleDTO, MOVIE);
+    }
+
+    private TitleDTO updateTitle(String id, CreateTitleDTO createTitleDTO, Type type) {
         if (repository.existsById(id)) {
             Title title = Title.from(createTitleDTO);
             title.setId(id);
+            title.setType(type);
             return TitleDTO.from(repository.save(title));
         } else {
             throw new TitleNotFoundException(id);

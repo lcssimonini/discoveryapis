@@ -1,6 +1,5 @@
 package io.builders.discoveryapis.resources;
 
-import io.builders.discoveryapis.domain.Title;
 import io.builders.discoveryapis.dto.CreateTitleDTO;
 import io.builders.discoveryapis.dto.TitleDTO;
 import io.builders.discoveryapis.service.TitleService;
@@ -25,7 +24,7 @@ public class TitleResource {
         return service.findAll(pageable);
     }
 
-    @PostMapping("/movie")
+    @PostMapping("/movies")
     public TitleDTO createMovie(@Valid @RequestBody CreateTitleDTO createTitleDTO) {
         return service.createMovie(createTitleDTO);
     }
@@ -35,9 +34,14 @@ public class TitleResource {
         return service.createSeries(createTitleDTO);
     }
 
-    @PutMapping("/{id}")
-    public TitleDTO updateClient(@PathVariable String id, @Valid @RequestBody CreateTitleDTO createTitleDTO) {
-        return service.updateTitle(id, createTitleDTO);
+    @PutMapping("/movies/{id}")
+    public TitleDTO updateMovie(@PathVariable String id, @Valid @RequestBody CreateTitleDTO createTitleDTO) {
+        return service.updateMovie(id, createTitleDTO);
+    }
+
+    @PutMapping("/series/{id}")
+    public TitleDTO updateSeries(@PathVariable String id, @Valid @RequestBody CreateTitleDTO createTitleDTO) {
+        return service.updateSeries(id, createTitleDTO);
     }
 
     @DeleteMapping("/{id}")

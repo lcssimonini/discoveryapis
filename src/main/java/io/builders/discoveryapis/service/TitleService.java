@@ -13,7 +13,9 @@ public interface TitleService {
 
     TitleDTO createSeries(CreateTitleDTO createTitleDTO);
 
-    TitleDTO updateTitle(String id, CreateTitleDTO createTitleDTO);
+    TitleDTO updateSeries(String id, CreateTitleDTO createTitleDTO);
+
+    TitleDTO updateMovie(String id, CreateTitleDTO createTitleDTO);
 
     void delete(String id);
 

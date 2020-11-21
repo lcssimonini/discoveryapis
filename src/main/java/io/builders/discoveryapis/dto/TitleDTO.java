@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
-
 @Builder
 @Data
 @NoArgsConstructor
@@ -22,8 +20,8 @@ public class TitleDTO {
     private String director;
     private String cast;
     private String country;
-    private Date dateAdded;
-    private Integer releaseYear;
+    private String dateAdded;
+    private String releaseYear;
     private String rating;
     private String duration;
     private String listedIn;
@@ -32,6 +30,7 @@ public class TitleDTO {
     public static TitleDTO from(Title title) {
         return TitleDTO.builder()
                 .id(title.getId())
+                .title(title.getTitle())
                 .type(title.getType().name())
                 .director(title.getDirector())
                 .cast(title.getCast())

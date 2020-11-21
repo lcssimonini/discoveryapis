@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
 
 @Builder
 @Data
@@ -13,12 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreateTitleDTO {
 
+    @NotBlank
     private String title;
     private String director;
     private String cast;
     private String country;
-    private Date dateAdded;
-    private Integer releaseYear;
+    private String dateAdded;
+    private String releaseYear;
+    @NotBlank
     private String rating;
     private String duration;
     private String listedIn;
