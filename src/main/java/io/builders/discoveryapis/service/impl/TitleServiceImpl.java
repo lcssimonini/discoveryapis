@@ -8,7 +8,6 @@ import io.builders.discoveryapis.repository.TitleRepository;
 import io.builders.discoveryapis.service.TitleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,7 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDTO createMovie(CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to save movie: {}", createTitleDTO);
+        log.info("Attempt to save movie: {}", createTitleDTO);
         Title movie = Title.from(createTitleDTO);
         movie.setType(MOVIE);
         return TitleDTO.from(repository.save(movie));
@@ -44,7 +43,7 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDTO createSeries(CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to save series: {}", createTitleDTO);
+        log.info("Attempt to save series: {}", createTitleDTO);
         Title series = Title.from(createTitleDTO);
         series.setType(SERIES);
         return TitleDTO.from(repository.save(series));
@@ -52,13 +51,13 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public TitleDTO updateSeries(String id, CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to update series with id: {}, and data: {}", id, createTitleDTO);
+        log.info("Attempt to update series with id: {}, and data: {}", id, createTitleDTO);
         return updateTitle(id, createTitleDTO, SERIES);
     }
 
     @Override
     public TitleDTO updateMovie(String id, CreateTitleDTO createTitleDTO) {
-        log.debug("Attempt to update movie with id: {}, and data: {}", id, createTitleDTO);
+        log.info("Attempt to update movie with id: {}, and data: {}", id, createTitleDTO);
         return updateTitle(id, createTitleDTO, MOVIE);
     }
 
@@ -75,21 +74,22 @@ public class TitleServiceImpl implements TitleService {
 
     @Override
     public void delete(String id) {
-        log.debug("Attempt to delete title with id: {}", id);
-        try {
-            repository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            log.info("Title with id: {} does not exist", id);
-            throw new TitleNotFoundException(id);
-        }
+        log.info("Attempt to delete title with id: {}", id);
+        repository.deleteById(id);
     }
 
     @Override
     public TitleDTO findById(String id) {
-        log.debug("Attempt to find Title with id: {}", id);
+        log.info("Attempt to find Title with id: {}", id);
         return repository.findById(id)
                 .map(TitleDTO::from)
                 .orElseThrow(() -> new TitleNotFoundException(id));
+    }
+
+    @Override
+    public void deleteAll() {
+        log.info("removing all titles");
+        repository.deleteAll();
     }
 
     private PageImpl<TitleDTO> getClientDTOPage(Pageable pageable, Page<Title> clientPage) {

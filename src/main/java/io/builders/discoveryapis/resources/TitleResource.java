@@ -45,12 +45,18 @@ public class TitleResource {
     }
 
     @DeleteMapping("/{id}")
-   public void deleteClient(@PathVariable String id) {
+   public void deleteTitle(@PathVariable String id) {
         service.delete(id);
     }
 
     @GetMapping("/{id}")
-    public TitleDTO getClient(@PathVariable String id) {
+    public TitleDTO getTitle(@PathVariable String id) {
+
         return service.findById(id);
+    }
+
+    @DeleteMapping()
+    public void clear() {
+        service.deleteAll();
     }
 }

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {DiscoveryapisApplication.class})
 @AutoConfigureMockMvc
-@Import(DeleteAllEndpoint.class)
 public class TitleIntegrationTest {
 
     private static final String TITLES_PATH = "/titles";
@@ -38,7 +36,7 @@ public class TitleIntegrationTest {
 
     @BeforeEach
     void setup() throws Exception {
-        mvc.perform(delete("/clear")
+        mvc.perform(delete(TITLES_PATH)
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());

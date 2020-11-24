@@ -20,4 +20,6 @@ public interface TitleService {
     void delete(String id);
 
     TitleDTO findById(String id);
+
+    void deleteAll();
 }
